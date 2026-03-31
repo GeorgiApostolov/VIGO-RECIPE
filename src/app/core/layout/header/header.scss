@@ -1,0 +1,30 @@
+:host {
+  display: block;
+}
+
+.user-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid #eedbca;
+  border-radius: 999px;
+  background: #fff7ef;
+  color: #8b3714;
+  font-weight: 700;
+}
+
+.nav-button {
+  border: none;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: #2f1c12;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.nav-button:hover {
+  opacity: 0.9;
+}
