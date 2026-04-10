@@ -3,14 +3,46 @@
     <p class="section-kicker">Welcome back</p>
     <h2 class="section-title">Login</h2>
 
-    <form class="auth-form">
+    <form class="auth-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       <label for="email">Email</label>
-      <input id="email" type="email" placeholder="anna@example.com" />
+      <input id="email" type="email" placeholder="anna@example.com" formControlName="email" />
+
+      @if (emailControl.touched && emailControl.hasError('required')) {
+        <p class="form-error">Email is required.</p>
+      }
+
+      @if (emailControl.touched && emailControl.hasError('email')) {
+        <p class="form-error">Please enter a valid email address.</p>
+      }
 
       <label for="password">Password</label>
-      <input id="password" type="password" placeholder="Enter your password" />
+      <input
+        id="password"
+        type="password"
+        placeholder="Enter your password"
+        formControlName="password"
+      />
 
-      <button type="button" class="btn btn-primary full-width">Login</button>
+      @if (passwordControl.touched && passwordControl.hasError('required')) {
+        <p class="form-error">Password is required.</p>
+      }
+
+      @if (passwordControl.touched && passwordControl.hasError('minlength')) {
+        <p class="form-error">Password must be at least 6 characters.</p>
+      }
+
+      @if (submitError) {
+        <p class="form-error-box">{{ submitError }}</p>
+      }
+
+      <button type="submit" class="btn btn-primary full-width" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Logging in...' : 'Login' }}
+      </button>
     </form>
+
+    <p class="auth-note">
+      Don't have an account?
+      <a routerLink="/register">Register</a>
+    </p>
   </div>
 </section>
