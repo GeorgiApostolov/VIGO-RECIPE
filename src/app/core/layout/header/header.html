@@ -9,6 +9,8 @@
       <a routerLink="/recipes" routerLinkActive="active">Recipes</a>
 
       @if (isLoggedIn$ | async) {
+        <a routerLink="/my-recipes" routerLinkActive="active">My Recipes</a>
+        <a routerLink="/recipes/create" routerLinkActive="active">Create Recipe</a>
         <span class="user-pill">{{ (currentUser$ | async)?.email }}</span>
         <button type="button" class="nav-button" (click)="logout()">Logout</button>
       } @else {

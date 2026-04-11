@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, map } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, distinctUntilChanged, map } from 'rxjs';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -15,6 +15,7 @@ import { UserModel } from '../../shared/interfaces/user.model.js';
 })
 export class Auth {
   private readonly userSubject = new BehaviorSubject<UserModel | null>(null);
+  private readonly readySubject = new ReplaySubject<boolean>(1);
   private hasRestoredSession = false;
 
   readonly currentUser$ = this.userSubject
@@ -29,6 +30,11 @@ export class Auth {
     );
 
   readonly isLoggedIn$ = this.currentUser$.pipe(map((user) => user !== null));
+  readonly authReady$ = this.readySubject.asObservable();
+
+  constructor() {
+    this.restoreSession();
+  }
 
   get currentUser(): UserModel | null {
     return this.userSubject.value;
@@ -42,13 +48,17 @@ export class Auth {
     this.hasRestoredSession = true;
 
     onAuthStateChanged(firebaseAuth, async (firebaseUser) => {
-      if (!firebaseUser) {
-        this.userSubject.next(null);
-        return;
-      }
+      try {
+        if (!firebaseUser) {
+          this.userSubject.next(null);
+          return;
+        }
 
-      const user = await this.mapFirebaseUser(firebaseUser);
-      this.userSubject.next(user);
+        const user = await this.mapFirebaseUser(firebaseUser);
+        this.userSubject.next(user);
+      } finally {
+        this.readySubject.next(true);
+      }
     });
   }
 
