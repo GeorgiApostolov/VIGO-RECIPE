@@ -9,3 +9,12 @@ export interface RecipeModel {
   ownerId: string;
   createdAt: string;
 }
+
+export interface RecipeFormModel {
+  title: string;
+  imageUrl: string;
+  category: string;
+  cookingTime: number;
+  ingredients: string;
+  instructions: string;
+}

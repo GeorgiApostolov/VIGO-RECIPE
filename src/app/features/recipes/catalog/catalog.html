@@ -6,35 +6,42 @@
     </div>
   </div>
 
-  <div class="recipe-grid">
-    <article class="recipe-card">
-      <div class="recipe-image image-breakfast"></div>
-      <div class="recipe-body">
-        <span class="recipe-category">Breakfast</span>
-        <h3>Avocado Toast</h3>
-        <p>Crispy bread, creamy avocado and fresh herbs.</p>
-        <a routerLink="/recipes/1" class="btn btn-secondary">View Details</a>
-      </div>
-    </article>
+  @if (vm$ | async; as vm) {
+    @if (vm.loading) {
+      <article class="page-card state-card">
+        <h3>Loading recipes...</h3>
+        <p class="state-text">Please wait while we load the catalog.</p>
+      </article>
+    } @else if (vm.error) {
+      <article class="page-card state-card">
+        <h3>Unable to load recipes</h3>
+        <p class="state-text">{{ vm.error }}</p>
+      </article>
+    } @else if (!vm.recipes.length) {
+      <article class="page-card state-card">
+        <h3>No recipes yet</h3>
+        <p class="state-text">There are no shared recipes yet.</p>
+      </article>
+    } @else {
+      <div class="recipe-grid">
+        @for (recipe of vm.recipes; track recipe.id) {
+          <article class="recipe-card">
+            <div class="recipe-image">
+              <img [src]="recipe.imageUrl" [alt]="recipe.title" />
+            </div>
 
-    <article class="recipe-card">
-      <div class="recipe-image image-lunch"></div>
-      <div class="recipe-body">
-        <span class="recipe-category">Lunch</span>
-        <h3>Chicken Bowl</h3>
-        <p>Juicy chicken, vegetables and warm rice in one bowl.</p>
-        <a routerLink="/recipes/2" class="btn btn-secondary">View Details</a>
+            <div class="recipe-body">
+              <span class="recipe-category">{{ recipe.category }}</span>
+              <h3>{{ recipe.title }}</h3>
+              <p class="recipe-meta">
+                {{ recipe.cookingTime }} min • {{ recipe.createdAt | date: 'mediumDate' }}
+              </p>
+              <p class="recipe-preview">{{ recipe.instructions }}</p>
+              <a [routerLink]="['/recipes', recipe.id]" class="btn btn-secondary">View Details</a>
+            </div>
+          </article>
+        }
       </div>
-    </article>
-
-    <article class="recipe-card">
-      <div class="recipe-image image-dessert"></div>
-      <div class="recipe-body">
-        <span class="recipe-category">Dessert</span>
-        <h3>Berry Cheesecake</h3>
-        <p>Soft cream texture with fresh berries and biscuit crumbs.</p>
-        <a routerLink="/recipes/3" class="btn btn-secondary">View Details</a>
-      </div>
-    </article>
-  </div>
+    }
+  }
 </section>

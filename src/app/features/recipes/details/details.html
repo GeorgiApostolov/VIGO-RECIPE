@@ -1,21 +1,35 @@
 <section class="page-section">
-  <article class="details-card">
-    <div class="details-image"></div>
+  @if (vm$ | async; as vm) {
+    @if (vm.loading) {
+      <article class="page-card state-card">
+        <h3>Loading recipe...</h3>
+        <p class="state-text">Please wait while we load the details.</p>
+      </article>
+    } @else if (vm.error) {
+      <article class="page-card state-card">
+        <h3>Recipe unavailable</h3>
+        <p class="state-text">{{ vm.error }}</p>
+      </article>
+    } @else if (vm.recipe; as recipe) {
+      <article class="details-card">
+        <div class="details-image">
+          <img [src]="recipe.imageUrl" [alt]="recipe.title" />
+        </div>
 
-    <div class="details-content">
-      <span class="recipe-category">Pasta</span>
-      <h2 class="section-title">Creamy Tomato Pasta</h2>
-      <p class="details-meta">Recipe id from URL: {{ recipeId }}</p>
+        <div class="details-content">
+          <span class="recipe-category">{{ recipe.category }}</span>
+          <h2 class="section-title">{{ recipe.title }}</h2>
+          <p class="details-meta">
+            {{ recipe.cookingTime }} min • {{ recipe.createdAt | date: 'mediumDate' }}
+          </p>
 
-      <p>Rich tomato sauce, garlic, parmesan and a silky finish perfect for a quick dinner.</p>
+          <h3>Ingredients</h3>
+          <p class="details-text-block">{{ recipe.ingredients }}</p>
 
-      <h3>Ingredients</h3>
-      <ul class="details-list">
-        <li>Pasta</li>
-        <li>Tomato sauce</li>
-        <li>Garlic</li>
-        <li>Parmesan</li>
-      </ul>
-    </div>
-  </article>
+          <h3>Instructions</h3>
+          <p class="details-text-block">{{ recipe.instructions }}</p>
+        </div>
+      </article>
+    }
+  }
 </section>

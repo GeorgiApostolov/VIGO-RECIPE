@@ -398,3 +398,38 @@ a {
 .auth-form input.ng-invalid.ng-touched {
   border-color: #d64545;
 }
+.recipe-image img,
+.details-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-meta {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.recipe-preview {
+  min-height: 76px;
+  margin: 0 0 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.state-card {
+  padding: 1.5rem;
+}
+
+.state-text {
+  margin: 0;
+  color: var(--muted);
+}
+
+.details-text-block {
+  color: var(--muted);
+  line-height: 1.75;
+  white-space: pre-line;
+}
