@@ -1,0 +1,84 @@
+:host {
+  display: block;
+}
+
+.recipe-form-shell {
+  padding: 2rem;
+}
+
+.recipe-form-header {
+  margin-bottom: 1.5rem;
+}
+
+.helper-text {
+  margin: -0.5rem 0 0;
+  color: var(--muted);
+}
+
+.recipe-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.form-field-full {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid #d9c3b1;
+  border-radius: 16px;
+  background: #fffdfb;
+  font: inherit;
+  color: var(--text);
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: 2px solid rgba(180, 73, 29, 0.16);
+  border-color: var(--primary);
+}
+
+button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 700px) {
+  .recipe-form-shell {
+    padding: 1.25rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-field-full {
+    grid-column: auto;
+  }
+}

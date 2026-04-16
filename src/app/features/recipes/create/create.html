@@ -1,7 +1,111 @@
 <section class="page-section">
-  <article class="page-card info-card">
-    <p class="section-kicker">Private page</p>
-    <h2 class="section-title">Create Recipe</h2>
-    <p>This protected page will contain the create recipe form in the next step.</p>
-  </article>
+  <div class="recipe-form-shell page-card">
+    <div class="recipe-form-header">
+      <p class="section-kicker">Private page</p>
+      <h2 class="section-title">Create Recipe</h2>
+      <p class="helper-text">Fill in the recipe information and publish it to the catalog.</p>
+    </div>
+
+    <form class="recipe-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="title">Title</label>
+          <input id="title" type="text" placeholder="Creamy Tomato Pasta" formControlName="title" />
+
+          @if (titleControl.touched && titleControl.hasError('required')) {
+            <p class="form-error">Title is required.</p>
+          }
+
+          @if (titleControl.touched && titleControl.hasError('minlength')) {
+            <p class="form-error">Title must be at least 3 characters.</p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="category">Category</label>
+          <select id="category" formControlName="category">
+            <option value="">Select category</option>
+            @for (category of categories; track category) {
+              <option [value]="category">{{ category }}</option>
+            }
+          </select>
+
+          @if (categoryControl.touched && categoryControl.hasError('required')) {
+            <p class="form-error">Category is required.</p>
+          }
+        </div>
+
+        <div class="form-field form-field-full">
+          <label for="imageUrl">Image URL</label>
+          <input
+            id="imageUrl"
+            type="text"
+            placeholder="https://example.com/recipe-image.jpg"
+            formControlName="imageUrl"
+          />
+
+          @if (imageUrlControl.touched && imageUrlControl.hasError('required')) {
+            <p class="form-error">Image URL is required.</p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="cookingTime">Cooking Time (minutes)</label>
+          <input id="cookingTime" type="number" min="1" formControlName="cookingTime" />
+
+          @if (cookingTimeControl.touched && cookingTimeControl.hasError('required')) {
+            <p class="form-error">Cooking time is required.</p>
+          }
+
+          @if (cookingTimeControl.touched && cookingTimeControl.hasError('min')) {
+            <p class="form-error">Cooking time must be at least 1 minute.</p>
+          }
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="ingredients">Ingredients</label>
+        <textarea
+          id="ingredients"
+          rows="6"
+          placeholder="Pasta&#10;Tomato sauce&#10;Garlic&#10;Parmesan"
+          formControlName="ingredients"
+        ></textarea>
+
+        @if (ingredientsControl.touched && ingredientsControl.hasError('required')) {
+          <p class="form-error">Ingredients are required.</p>
+        }
+
+        @if (ingredientsControl.touched && ingredientsControl.hasError('minlength')) {
+          <p class="form-error">Ingredients must be at least 10 characters.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="instructions">Instructions</label>
+        <textarea
+          id="instructions"
+          rows="7"
+          placeholder="Cook the pasta.&#10;Prepare the sauce.&#10;Mix everything and serve warm."
+          formControlName="instructions"
+        ></textarea>
+
+        @if (instructionsControl.touched && instructionsControl.hasError('required')) {
+          <p class="form-error">Instructions are required.</p>
+        }
+
+        @if (instructionsControl.touched && instructionsControl.hasError('minlength')) {
+          <p class="form-error">Instructions must be at least 10 characters.</p>
+        }
+      </div>
+
+      @if (submitError) {
+        <p class="form-error-box">{{ submitError }}</p>
+      }
+
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Creating...' : 'Create Recipe' }}
+      </button>
+    </form>
+  </div>
 </section>
