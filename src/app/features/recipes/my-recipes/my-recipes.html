@@ -1,7 +1,55 @@
 <section class="page-section">
-  <article class="page-card info-card">
-    <p class="section-kicker">Private page</p>
-    <h2 class="section-title">My Recipes</h2>
-    <p>This protected page will show only the recipes created by the logged-in user.</p>
-  </article>
+  <div class="section-heading">
+    <div>
+      <p class="section-kicker">Private page</p>
+      <h2 class="section-title">My Recipes</h2>
+    </div>
+
+    <a routerLink="/recipes/create" class="btn btn-primary">Create Recipe</a>
+  </div>
+
+  @if (vm$ | async; as vm) {
+    @if (vm.loading) {
+      <article class="page-card state-card">
+        <h3>Loading your recipes...</h3>
+        <p class="state-text">Please wait while we load your recipe collection.</p>
+      </article>
+    } @else if (vm.error) {
+      <article class="page-card state-card">
+        <h3>Unable to load recipes</h3>
+        <p class="state-text">{{ vm.error }}</p>
+      </article>
+    } @else if (!vm.recipes.length) {
+      <article class="page-card state-card">
+        <h3>No recipes created yet</h3>
+        <p class="state-text">Create your first recipe to see it here.</p>
+      </article>
+    } @else {
+      <div class="recipe-grid">
+        @for (recipe of vm.recipes; track recipe.id) {
+          <article class="recipe-card">
+            <div class="recipe-image">
+              <img [src]="recipe.imageUrl" [alt]="recipe.title" />
+            </div>
+
+            <div class="recipe-body">
+              <span class="recipe-category">{{ recipe.category }}</span>
+              <h3>{{ recipe.title }}</h3>
+              <p class="recipe-meta">
+                {{ recipe.cookingTime }} min • {{ recipe.createdAt | date: 'mediumDate' }}
+              </p>
+
+              <div class="recipe-actions">
+                <a [routerLink]="['/recipes', recipe.id]" class="btn btn-secondary">Details</a>
+                <a [routerLink]="['/recipes', recipe.id, 'edit']" class="btn btn-secondary">Edit</a>
+                <a [routerLink]="['/recipes', recipe.id, 'delete']" class="btn btn-danger"
+                  >Delete</a
+                >
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  }
 </section>

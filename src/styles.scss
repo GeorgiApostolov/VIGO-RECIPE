@@ -433,3 +433,23 @@ a {
   line-height: 1.75;
   white-space: pre-line;
 }
+.recipe-actions,
+.details-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn-danger {
+  background: #7b271a;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background: #611d13;
+}
+
+.state-card .btn {
+  margin-top: 1rem;
+}

@@ -1,7 +1,44 @@
 <section class="page-section">
-  <article class="page-card info-card">
-    <p class="section-kicker">Private page</p>
-    <h2 class="section-title">Delete Recipe</h2>
-    <p>This protected page will later ask for delete confirmation.</p>
-  </article>
+  @if (isLoading) {
+    <article class="page-card state-card">
+      <h3>Loading recipe...</h3>
+      <p class="state-text">Please wait while we prepare the delete confirmation.</p>
+    </article>
+  } @else if (error && !recipe) {
+    <article class="page-card state-card">
+      <h3>Recipe unavailable</h3>
+      <p class="state-text">{{ error }}</p>
+    </article>
+  } @else if (notOwner) {
+    <article class="page-card state-card">
+      <h3>Access denied</h3>
+      <p class="state-text">You can delete only your own recipes.</p>
+      <a [routerLink]="['/recipes', recipeId]" class="btn btn-secondary">Back to Details</a>
+    </article>
+  } @else if (recipe) {
+    <article class="page-card delete-shell">
+      <p class="section-kicker">Danger zone</p>
+      <h2 class="section-title">Delete Recipe</h2>
+      <p class="helper-text">
+        You are about to delete <strong>{{ recipe.title }}</strong
+        >. This action cannot be undone.
+      </p>
+
+      @if (error) {
+        <p class="form-error-box">{{ error }}</p>
+      }
+
+      <div class="delete-actions">
+        <a [routerLink]="['/recipes', recipe.id]" class="btn btn-secondary">Cancel</a>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmDelete()"
+          [disabled]="isDeleting"
+        >
+          {{ isDeleting ? 'Deleting...' : 'Delete Recipe' }}
+        </button>
+      </div>
+    </article>
+  }
 </section>

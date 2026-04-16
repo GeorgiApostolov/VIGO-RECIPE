@@ -23,6 +23,13 @@
             {{ recipe.cookingTime }} min • {{ recipe.createdAt | date: 'mediumDate' }}
           </p>
 
+          @if (vm.isOwner) {
+            <div class="details-actions">
+              <a [routerLink]="['/recipes', recipe.id, 'edit']" class="btn btn-secondary">Edit</a>
+              <a [routerLink]="['/recipes', recipe.id, 'delete']" class="btn btn-danger">Delete</a>
+            </div>
+          }
+
           <h3>Ingredients</h3>
           <p class="details-text-block">{{ recipe.ingredients }}</p>
 
