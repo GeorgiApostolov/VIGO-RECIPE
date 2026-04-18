@@ -1,59 +1,107 @@
-# VigoRecipe
+# Vigo Recipe
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
+Vigo Recipe is a Single Page Application built with Angular and Firebase for sharing cooking ideas and managing personal recipes.
 
-## Development server
+## Functional Guide
 
-To start a local development server, run:
+### 1. Purpose of the Application
 
-```bash
-ng serve
-```
+The application allows users to browse recipes, view recipe details, and manage their own recipe collection after authentication.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 2. Main User Flows
 
-## Code scaffolding
+#### Guest Flow
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Guests can:
 
-```bash
-ng generate component component-name
-```
+- Open the home page
+- Browse the public recipe catalog
+- Open recipe details
+- Register for a new account
+- Log in with an existing account
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Guests cannot:
 
-```bash
-ng generate --help
-```
+- Create recipes
+- Edit recipes
+- Delete recipes
+- Access the personal dashboard
 
-## Building
+#### Authenticated User Flow
 
-To build the project run:
+Logged-in users can:
 
-```bash
-ng build
-```
+- Stay logged in after page refresh
+- Create new recipes
+- View recipe details
+- Open a personal dashboard with their own recipes
+- Edit their own recipes
+- Delete their own recipes
+- Log out safely
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### 3. Core Features
 
-## Running unit tests
+#### Public Part
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- Home page
+- Recipe catalog
+- Recipe details page
+- Login page
+- Register page
 
-```bash
-ng test
-```
+#### Private Part
 
-## Running end-to-end tests
+- Create recipe page
+- Edit recipe page
+- Delete recipe page
+- My Recipes dashboard
 
-For end-to-end (e2e) testing, run:
+#### Authentication
 
-```bash
-ng e2e
-```
+- Firebase Authentication with email and password
+- Guest guard for login/register
+- Auth guard for private routes
+- Persistent login session after refresh
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+#### Recipe Management
 
-## Additional Resources
+- Recipes are stored in Firebase Firestore
+- Users can create new records
+- Users can update only their own records
+- Users can delete only their own records
+- Public users can only read catalog and details
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### 4. How the User Interacts with the System
+
+1. A guest enters the application through the home page.
+2. The guest can browse the recipe catalog and open details pages.
+3. The guest can register or log in.
+4. After authentication, the user sees extra navigation options such as My Recipes and Create Recipe.
+5. The user can create a new recipe through a validated form.
+6. The created recipe appears in the catalog and in My Recipes.
+7. From details or My Recipes, the owner can edit or delete the recipe.
+8. If the user refreshes the page, the authentication state remains active.
+
+### 5. Validation and Error Handling
+
+- Reactive forms are used for login, register, create, and edit pages
+- Required fields and minimum length validation are implemented
+- User-friendly error messages are displayed
+- Empty state messages are shown when there are no recipes
+- Network and loading states are handled in the catalog, details, and dashboard pages
+
+## Technologies Used
+
+- Angular
+- TypeScript
+- RxJS
+- Firebase Authentication
+- Firebase Firestore
+- SCSS
+
+## Local Setup
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```

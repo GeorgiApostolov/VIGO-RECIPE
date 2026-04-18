@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { catchError, map, of, startWith } from 'rxjs';
 import { Recipes } from '../../../core/services/recipes.js';
 import { RecipeModel } from '../../../shared/interfaces/recipe.model.js';
+import { TruncateTextPipe } from '../../../shared/pipes/truncate-text-pipe.js';
 
 type CatalogViewModel = {
   recipes: RecipeModel[];
@@ -13,7 +14,7 @@ type CatalogViewModel = {
 
 @Component({
   selector: 'app-catalog',
-  imports: [RouterLink, AsyncPipe, DatePipe],
+  imports: [RouterLink, AsyncPipe, DatePipe, TruncateTextPipe],
   templateUrl: './catalog.html',
   styleUrl: './catalog.scss',
 })

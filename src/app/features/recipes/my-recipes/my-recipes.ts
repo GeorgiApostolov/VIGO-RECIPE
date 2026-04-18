@@ -5,6 +5,7 @@ import { catchError, map, of, startWith } from 'rxjs';
 import { Auth } from '../../../core/services/auth.js';
 import { Recipes } from '../../../core/services/recipes.js';
 import { RecipeModel } from '../../../shared/interfaces/recipe.model.js';
+import { TruncateTextPipe } from '../../../shared/pipes/truncate-text-pipe.js';
 
 type MyRecipesViewModel = {
   recipes: RecipeModel[];
@@ -14,7 +15,7 @@ type MyRecipesViewModel = {
 
 @Component({
   selector: 'app-my-recipes',
-  imports: [AsyncPipe, DatePipe, RouterLink],
+  imports: [AsyncPipe, DatePipe, RouterLink, TruncateTextPipe],
   templateUrl: './my-recipes.html',
   styleUrl: './my-recipes.scss',
 })

@@ -38,6 +38,7 @@
               <p class="recipe-meta">
                 {{ recipe.cookingTime }} min • {{ recipe.createdAt | date: 'mediumDate' }}
               </p>
+              <p class="recipe-preview">{{ recipe.instructions | truncateText: 90 }}</p>
 
               <div class="recipe-actions">
                 <a [routerLink]="['/recipes', recipe.id]" class="btn btn-secondary">Details</a>
