@@ -74,10 +74,14 @@ export class Auth {
     this.userSubject.next(user);
   }
 
-  logout(): void {
-    signOut(firebaseAuth).catch((error: unknown) => {
+  async logout(): Promise<void> {
+    try {
+      await signOut(firebaseAuth);
+      this.userSubject.next(null);
+    } catch (error: unknown) {
       console.error('Firebase logout error', error);
-    });
+      throw error;
+    }
   }
 
   getErrorMessage(error: unknown): string {
